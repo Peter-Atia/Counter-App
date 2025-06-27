@@ -4,19 +4,16 @@ import 'package:flutter/material.dart';
 class CustomColumn extends StatelessWidget {
   const CustomColumn({
     super.key,
-    required this.onPressed1,
-    required this.onPressed2,
-    required this.onPressed3,
     this.teamACounter,
     this.teamBCounter,
     required this.title,
+    required this.team,
   });
   final String title;
-  final VoidCallback onPressed1;
-  final VoidCallback onPressed2;
-  final VoidCallback onPressed3;
-  final int ?teamACounter;
-  final int ?teamBCounter;
+  final String team;
+
+  final int? teamACounter;
+  final int? teamBCounter;
 
   @override
   Widget build(BuildContext context) {
@@ -28,23 +25,25 @@ class CustomColumn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding:const EdgeInsets.only(top: 8),
+                padding: const EdgeInsets.only(top: 8),
                 child: Text(title, style: TextStyle(fontSize: 30)),
               ),
               Text(
-                teamACounter != null ?
-                "$teamACounter" : "$teamBCounter",
+                teamACounter != null ? "$teamACounter" : "$teamBCounter",
                 style: const TextStyle(fontSize: 130),
               ),
-              CustomButton(title: "Add 1 Point", onPressed: onPressed1),
-              CustomButton(title: "Add 2 Point", onPressed: onPressed2),
-              CustomButton(title: "Add 3 Point", onPressed: onPressed3),
 
+              for (int i = 0; i < 3; i++)
+                CustomButton(
+                  title: "Add ${i + 1} Points",
+                  team: team,
+                  buttonNumber: i+1,
+                ),
+
+              //CustomButton(title: "Add 1 Point", onPressed: onPressed1),
             ],
           ),
         ),
-
-
       ],
     );
   }
