@@ -22,8 +22,7 @@ class PointsCounter extends StatelessWidget {
 }
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
-  int teamAPoints = 0, teamBPoints = 0;
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,9 @@ class HomeView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   CustomColumn(
-                    teamACounter: teamAPoints,
+                    teamACounter: BlocProvider.of<CounterCubit>(
+                      context,
+                    ).teamAPoints,
                     title: "Team A",
                     team: 'A',
                   ),
@@ -54,7 +55,9 @@ class HomeView extends StatelessWidget {
                     ),
                   ),
                   CustomColumn(
-                    teamBCounter: teamBPoints,
+                    teamBCounter: BlocProvider.of<CounterCubit>(
+                      context,
+                    ).teamBPoints,
                     title: "Team B",
                     team: 'B',
                   ),
@@ -62,23 +65,13 @@ class HomeView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 50),
-                child: CustomButton(title: "Reset",),
+                child: CustomButton(title: "Reset"),
               ),
             ],
           ),
         );
       },
-      listener: (context, state) {
-        if (state is CounterAState) {
-          teamAPoints = BlocProvider.of<CounterCubit>(context).teamAPoints;
-        } else if (state is CounterBState) {
-          teamBPoints = BlocProvider.of<CounterCubit>(context).teamBPoints;
-        }
-        else if(state is CounterResetState){
-          teamAPoints = BlocProvider.of<CounterCubit>(context).teamAPoints;
-          teamBPoints = BlocProvider.of<CounterCubit>(context).teamBPoints;
-        }
-      },
+      listener: (context, state) {},
     );
   }
 }
